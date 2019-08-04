@@ -17,8 +17,7 @@ class CreateBoostsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('tank_id');
             $table->unsignedBigInteger('activity_id');
-            $table->foreign('tank_id')->references('id')->on('tanks');
-            $table->foreign('activity_id')->references('id')->on('activities');
+            $table->unsignedInteger('level');
             $table->text('notes')->nullable();
             $table->timestamps();
         });

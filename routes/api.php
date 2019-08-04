@@ -26,3 +26,5 @@ Route::resource('tanks', 'TankController');
 Route::resource('boosts', 'BoostController');
 Route::resource('tags', 'TagController');
 Route::resource('activities', 'ActivityController');
+
+Route::post('boost-tanks', 'BoostController@boostTank');

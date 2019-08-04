@@ -13,10 +13,7 @@ trait CRUDTrait {
      */
     public function index()
     {
-        return json_encode([
-            'status_code' => 200,
-            'data' =>  $this->model::all()
-        ]);
+        return $this->model::all();
     }
 
 
@@ -32,10 +29,7 @@ trait CRUDTrait {
         {
                 $record = new $this->model($request->post());
                 $record->save();
-                return json_encode([
-                    'status_code' => 200,
-                    'data' => $record
-                ]);
+                return $record;
         } 
         catch (\Exception $e)
         {
@@ -56,16 +50,8 @@ trait CRUDTrait {
     public function show($id)
     {
         if($this->model::whereId($id)->first()){
-                return json_encode([
-                    'status_code' => 200,
-                    'data' => $this->model::find($id)->first()
-                ]);
+                return $this->model::whereId($id)->first();
         } 
-        return json_encode([
-            'status_code' => 204,
-            'data' => json_encode([])
-        ]);
-
     }
 
 
@@ -81,18 +67,14 @@ trait CRUDTrait {
         try 
         {
             if($this->model::whereId($id)->first()){
-                $this->model::find($id)->update($request->post());
+                $this->model::whereId($id)->update($request->post());
                 return $this->model::whereId($id)->first();
             } 
-            return json_encode([
-                'status_code' => 400,
-                'message' => 'This record does not exist.'
-            ]);
         }
         catch (\Exception $e){
             return json_encode([
                 'status_code' => 500,
-                'message' => 'An error occured while updating the record.'
+                'message' => $e->getMessage()
             ]); 
         }
     }
